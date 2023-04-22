@@ -21,16 +21,30 @@ app.get('/', function (req, res) {
 
 // ACCEPTANCE CRITERIA:
 // Passed: You should provide your own project, not the example URL.
-// Failed: A request to /api/whoami should return a JSON object with your IP address in the ipaddress key.
+// Passed: A request to /api/whoami should return a JSON object with your IP address in the ipaddress key.
+// Passed: A request to /api/whoami should return a JSON object with your software in the software key.
 // Failed: A request to /api/whoami should return a JSON object with your preferred language in the language key.
-// Failed: A request to /api/whoami should return a JSON object with your software in the software key.
 
 app.get('/api/whoami', function (req, res) {
   // const ipAddress = req.socket.remoteAddress;
   const ipAddress = req.header('x-forwarded-for') || req.socket.remoteAddress;
-  const preferredLanguage = req.acceptsLanguages(lang ["bn"]);
-  // const software;
-  res.json({ ipaddress: ipAddress, language: preferredLanguage });
+  // const preferredLanguage = req.acceptsLanguages(lang, (["bn"]));
+  
+  
+  // let browser;
+
+  const userAgent = req.headers['user-agent'];
+  // if( /firefox/i.test(ua) ) { browser = 'firefox'}
+  // else if ( /chrome/i.test(ua) )
+  //   browser = 'chrome';
+  // else if( /safari/i.test(ua) )
+  //   browser = 'safari';
+  // else if( /msie/i.test(ua) )
+  //   browser = 'msie';
+  // else
+  //   browser = 'unknown';
+
+  res.json({ ipaddress: ipAddress, software: userAgent });
 });
 
 // listen for requests :)
