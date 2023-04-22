@@ -19,9 +19,18 @@ app.get('/', function (req, res) {
   res.sendFile(__dirname + '/views/index.html');
 });
 
-// your first API endpoint...
-app.get('/api/hello', function (req, res) {
-  res.json({ greeting: 'hello API' });
+// ACCEPTANCE CRITERIA:
+// Passed: You should provide your own project, not the example URL.
+// Failed: A request to /api/whoami should return a JSON object with your IP address in the ipaddress key.
+// Failed: A request to /api/whoami should return a JSON object with your preferred language in the language key.
+// Failed: A request to /api/whoami should return a JSON object with your software in the software key.
+
+app.get('/api/whoami', function (req, res) {
+  // const ipAddress = req.socket.remoteAddress;
+  const ipAddress = req.header('x-forwarded-for') || req.socket.remoteAddress;
+  const preferredLanguage = req.acceptsLanguages(lang ["bn"]);
+  // const software;
+  res.json({ ipaddress: ipAddress, language: preferredLanguage });
 });
 
 // listen for requests :)
